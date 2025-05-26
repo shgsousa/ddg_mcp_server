@@ -1,0 +1,5 @@
+duckduckgo-search>=4.1.1
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+markdownify>=0.11.6
+gradio[mcp]>=4.19.2 
