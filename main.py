@@ -111,14 +111,19 @@ def create_search_interface():
     return interface
 
 def main():
+    print("Starting server...")
     # Create and launch the Gradio interface
     interface = create_search_interface()
+    print("Interface created, launching server...")
     interface.launch(
         mcp_server=True,
-        server_name="127.0.0.1",
+        server_name="0.0.0.0",  # Allow external connections
         server_port=7860,
         share=False,
+        debug=True,  # Enable debug mode
+        show_error=True  # Show detailed errors
     )
+    print("Server launched!")
 
 if __name__ == "__main__":
     main()
