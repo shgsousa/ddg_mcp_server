@@ -1,96 +1,78 @@
+# DuckDuckGo MCP Server
 
-# ddg-mcp-server
+A web-based search interface using DuckDuckGo's search API, built with Python and Gradio.
 
-A web search tool and API powered by DuckDuckGo, Gradio, and MCP, providing both a user-friendly web interface and Claude Desktop tool integration.  
-It fetches web search results, extracts summaries, and retrieves the full content of web pages in markdown format.
+## Docker Setup
+
+### Prerequisites
+
+- Docker installed on your system
+- Git (optional, for cloning the repository)
+
+### Building the Docker Image
+
+1. Clone the repository (if you haven't already):
+
+```bash
+git clone <repository-url>
+cd ddg_mcp_server
+```
+
+2. Build the Docker image:
+
+```bash
+docker build -t ddg-mcp-server .
+```
+
+### Running the Container
+
+Run the container with port 7860 mapped to your host:
+
+```bash
+docker run -p 7860:7860 ddg-mcp-server
+```
+
+The application will be available at:
+
+- [http://localhost:7860](http://localhost:7860)
+- [http://127.0.0.1:7860](http://127.0.0.1:7860)
+
+### Troubleshooting
+
+If you cannot connect to the application:
+
+1. Verify the container is running:
+
+```bash
+docker ps
+```
+
+2. Check the container logs:
+
+```bash
+docker logs $(docker ps -q)
+```
+
+3. Try stopping any existing containers and starting fresh:
+
+```bash
+docker stop $(docker ps -q)
+docker run -p 7860:7860 ddg-mcp-server
+```
 
 ## Features
 
-- **DuckDuckGo Web Search:**  
-  Search the web using DuckDuckGo and retrieve the top N results.
-- **Full Content Extraction:**  
-  For each result, fetches the full web page, cleans it, and converts it to markdown.
-- **Summaries:**  
-  Each result includes a summary (snippet) and the full content.
-- **Gradio Web Interface:**  
-  User-friendly interface for interactive searching.
-- **MCP Server Integration:**  
-  Exposes the search tool to Claude Desktop and other MCP-compatible clients.
-- **403 Filtering:**  
-  Automatically excludes results that return HTTP 403 (forbidden) errors.
+- Web-based search interface using DuckDuckGo
+- Real-time search results with full content
+- Markdown-formatted output
+- Configurable number of results
 
-## Installation
+## Development
 
-1. **Clone the repository:**
-   ```bash
-   git clone <your-repo-url>
-   cd ddg-mcp-server
-   ```
+The application is built with:
 
-2. **Create a virtual environment (optional but recommended):**
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-   ```
-
-3. **Install dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-## Usage
-
-### Run the Server
-
-```bash
-python main.py
-```
-
-- The Gradio web interface will be available at:  
-  [http://127.0.0.1:7860](http://127.0.0.1:7860)
-- The MCP server will be available at:  
-  `http://127.0.0.1:7860/gradio_api/mcp/sse`
-
-### Using the Web Interface
-
-- Enter your search query and select the number of results.
-- Each result will display:
-  - Title
-  - Link
-  - Summary (snippet)
-  - Full content (markdown)
-
-### Using with Claude Desktop
-
-- Open Claude Desktop and add the MCP server if not auto-detected:
-  ```
-  http://127.0.0.1:7860/gradio_api/mcp/sse
-  ```
-- The tool will appear as `search` in the Claude Desktop tool list.
-
-## Example
-
-**Search Query:**  
-`What is the latest news on Pope Leo XIV?`
-
-**Result:**  
-- Title, link, summary, and full markdown content for each accessible result.
-
-## Configuration
-
-- **Number of Results:** Adjustable via the web interface slider or the `n` parameter in the MCP tool.
-- **403 Filtering:** Results that return HTTP 403 are skipped and replaced with the next available result.
-
-## Dependencies
-
-- duckduckgo-search
-- requests
-- beautifulsoup4
-- markdownify
-- gradio[mcp]
-
-(See `requirements.txt` for exact versions.)
-
-## License
-
-[Apache 2.0](LICENSE)
+- Python 3.10
+- Gradio for the web interface
+- DuckDuckGo Search API
+- BeautifulSoup4 for web scraping
+- Markdownify for content conversion
