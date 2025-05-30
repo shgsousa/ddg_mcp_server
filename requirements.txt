@@ -3,3 +3,4 @@ requests>=2.31.0
 beautifulsoup4>=4.12.0
 markdownify>=0.11.0
 gradio[mcp]>=4.0.0 
+tzlocal>=4.0.0

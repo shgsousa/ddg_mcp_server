@@ -6,6 +6,8 @@ import time
 import gradio as gr
 from gradio.themes import Soft
 import datetime
+from tzlocal import get_localzone
+import pytz
 
 def fetch_webpage_content(url: str) -> str | None:
     """
@@ -89,14 +91,28 @@ def search(query: str, n: int = 5) -> str:
 
 def get_datetime() -> str:
     """
-    Get the current date and time.
+    Get the current date and time with timezone information.
     
     Returns:
-        str: Formatted date and time string
+        str: Formatted date and time string with timezone
     """
+    # Get current datetime with timezone info
     now = datetime.datetime.now()
+    
+    # Get timezone name and offset
+    timezone_name = datetime.datetime.now(datetime.timezone.utc).astimezone().tzname()
+    timezone_offset = datetime.datetime.now(datetime.timezone.utc).astimezone().strftime('%z')
+    
+    # Format offset to be more readable (e.g., +0100 to +01:00)
+    if timezone_offset:
+        formatted_offset = f"{timezone_offset[:3]}:{timezone_offset[3:]}"
+    else:
+        formatted_offset = ""
+    
+    # Format the datetime
     formatted_datetime = now.strftime("%A, %B %d, %Y %I:%M:%S %p")
-    return f"## Current Date and Time\n\n**{formatted_datetime}**"
+    
+    return f"## Current Date and Time\n\n**{formatted_datetime}**\n\n**Timezone:** {timezone_name} ({formatted_offset})"
 
 def scrape(url: str) -> str:
     """
