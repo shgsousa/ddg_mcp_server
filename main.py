@@ -95,7 +95,8 @@ def get_datetime() -> str:
         str: Formatted date and time string
     """
     now = datetime.datetime.now()
-    formatted_datetime = now.strftime("%A, %B %d, %Y %I:%M:%S %p")
+    now = now.astimezone()  # Convert to local timezone
+    formatted_datetime = now.strftime("%A, %B %d, %Y %I:%M:%S %p %Z")
     return f"## Current Date and Time\n\n**{formatted_datetime}**"
 
 def scrape(url: str) -> str:
