@@ -1,5 +1,5 @@
-# Use Python 3.10 as base image
-FROM python:3.10-slim
+# Use Python 3.12 as base image
+FROM python:3.12-slim
 
 # Set working directory
 WORKDIR /app
@@ -20,4 +20,4 @@ COPY main.py .
 EXPOSE 7860
 
 # Command to run the application with proper host binding
-ENTRYPOINT ["python", "main.py"] 
+ENTRYPOINT ["python", "main.py"]
