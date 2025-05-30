@@ -174,7 +174,8 @@ def create_datetime_interface():
         title="Current Date and Time",
         description="Click the submit button to get the current date and time.",
         theme=Soft(),
-        api_name="datetime"
+        api_name="datetime",
+        mcp_server=True  # Enable MCP server for this interface
     )
     
     return interface
@@ -196,7 +197,8 @@ def create_scrape_interface():
             ["https://gradio.app/"]
         ],
         theme=Soft(),
-        api_name="scrape"
+        api_name="scrape",
+        mcp_server=True  # Enable MCP server for this interface
     )
     
     return interface

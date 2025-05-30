@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  ddg_mcp_server:
+    build: .
+    container_name: ddg_mcp_server
+    ports:
+      - "7860:7860"
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
