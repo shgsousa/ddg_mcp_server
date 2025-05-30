@@ -97,8 +97,6 @@ def get_datetime() -> str:
     now = datetime.datetime.now()
     now = now.astimezone()  # Convert to local timezone
     tz_name = now.strftime('%Z')
-    if len(tz_name) > 3:  # If timezone name is longer than 3 letters
-        tz_name = now.tzname() or 'UTC'  # Fallback to UTC if tzname is None
     formatted_datetime = now.strftime(f"%A, %B %d, %Y %I:%M:%S %p") + f" {tz_name}"
     return f"## Current Date and Time\n\n**{formatted_datetime}**"
 
