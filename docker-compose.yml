@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   ddg_mcp_server:
     build: .
