@@ -4,6 +4,8 @@ from bs4 import BeautifulSoup
 from markdownify import markdownify
 import time
 import gradio as gr
+from gradio.themes import Soft
+import datetime
 
 def fetch_webpage_content(url: str) -> str | None:
     """
@@ -85,6 +87,40 @@ def search(query: str, n: int = 5) -> str:
     
     return "\n".join(formatted_results)
 
+def get_datetime() -> str:
+    """
+    Get the current date and time.
+    
+    Returns:
+        str: Formatted date and time string
+    """
+    now = datetime.datetime.now()
+    formatted_datetime = now.strftime("%A, %B %d, %Y %I:%M:%S %p")
+    return f"## Current Date and Time\n\n**{formatted_datetime}**"
+
+def scrape(url: str) -> str:
+    """
+    Scrape a webpage and convert its content to markdown format.
+    
+    Args:
+        url (str): The URL of the webpage to scrape
+    
+    Returns:
+        str: Markdown formatted content of the webpage
+    """
+    content = fetch_webpage_content(url)
+    if content is None:
+        return "## Error\n\nCould not access the webpage. It might be blocking our request or the URL might be invalid."
+    
+    return f"""
+    ## Scraped Content from {url}
+    
+    **URL:** {url}
+    
+    **Content:**
+    {content}
+    """
+
 def create_search_interface():
     """
     Create and launch the Gradio interface for the search function.
@@ -104,18 +140,70 @@ def create_search_interface():
             ["Python programming best practices", 5],
             ["Latest developments in AI", 4]
         ],
-        theme=gr.themes.Soft(),
+        theme=Soft(),
         api_name="search"
+    )
+    
+    return interface
+
+def create_datetime_interface():
+    """
+    Create and launch the Gradio interface for the datetime function.
+    """
+    # Create the Gradio interface
+    interface = gr.Interface(
+        fn=get_datetime,
+        inputs=[],
+        outputs=gr.Markdown(label="Date and Time"),
+        title="Current Date and Time",
+        description="Click the submit button to get the current date and time.",
+        theme=Soft(),
+        api_name="datetime"
+    )
+    
+    return interface
+
+def create_scrape_interface():
+    """
+    Create a Gradio interface for the scrape function.
+    """
+    # Create the Gradio interface
+    interface = gr.Interface(
+        fn=scrape,
+        inputs=gr.Textbox(label="URL", placeholder="Enter the URL to scrape (e.g., https://example.com)"),
+        outputs=gr.Markdown(label="Scraped Content"),
+        title="Web Page Scraper",
+        description="Enter a URL to fetch and convert its content to markdown format.",
+        examples=[
+            ["https://en.wikipedia.org/wiki/Python_(programming_language)"],
+            ["https://www.example.com"],
+            ["https://gradio.app/"]
+        ],
+        theme=Soft(),
+        api_name="scrape"
     )
     
     return interface
 
 def main():
     print("Starting server...")
-    # Create and launch the Gradio interface
-    interface = create_search_interface()
+    # Create the interfaces
+    search_interface = create_search_interface()
+    datetime_interface = create_datetime_interface()
+    scrape_interface = create_scrape_interface()
+    
+    # Create a Blocks app with multiple tabs
+    with gr.Blocks(theme=Soft()) as demo:
+        with gr.Tabs():
+            with gr.Tab("Web Search"):
+                search_interface.render()
+            with gr.Tab("Date & Time"):
+                datetime_interface.render()
+            with gr.Tab("Scrape"):
+                scrape_interface.render()
+    
     print("Interface created, launching server...")
-    interface.launch(
+    demo.launch(
         mcp_server=True,
         server_name="0.0.0.0",  # Allow external connections
         server_port=7860,
