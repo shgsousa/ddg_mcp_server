@@ -127,7 +127,7 @@ The AI model used for summarization can be configured in the `config.py` file:
 
 ```python
 # Default model to use for summarization
-DEFAULT_MODEL = "gpt-3.5-turbo"
+DEFAULT_MODEL = "gpt-4.1-turbo"
 ```
 
 For detailed instructions on model configuration, see [SUMMARIZATION.md](SUMMARIZATION.md).
