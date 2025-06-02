@@ -152,7 +152,7 @@ def get_datetime() -> str:
     formatted_datetime = now.strftime(f"%A, %B %d, %Y %I:%M:%S %p %Z")
     return f"## Current Date and Time\n\n**{formatted_datetime}**"
 
-def scrape(url: str) -> str:
+def scrape(url: str, summarize: bool = False) -> str:
     """
     Scrape a webpage and convert its content to markdown format.
     
