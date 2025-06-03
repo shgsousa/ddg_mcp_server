@@ -374,11 +374,10 @@ def main():
                 datetime_interface.render()
             with gr.Tab("Scrape"):
                 scrape_interface.render()
-    
     print("Interface created, launching server...")
     demo.launch(
         mcp_server=True,
-        server_name="localhost",  # Allow external connections
+        server_name="0.0.0.0",  # Allow external connections
         server_port=7860,
         share=False,
         debug=True,  # Enable debug mode

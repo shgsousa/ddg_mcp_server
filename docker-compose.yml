@@ -3,9 +3,11 @@ services:
     build: .
     container_name: ddg_mcp_server
     ports:
-      - "7860:7860"
+      - "7860:7860"    
     environment:
       - PYTHONUNBUFFERED=1
       - OPENAI_API_URL=${OPENAI_API_URL:-https://api.openai.com/v1}
       - ACCESS_TOKEN=${ACCESS_TOKEN:-}
+    env_file:
+      - .env
     restart: unless-stopped
