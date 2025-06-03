@@ -13,13 +13,9 @@ COPY requirements.txt .
 # Install dependencies using uv
 RUN uv pip install --no-cache --system -r requirements.txt
 
-# Copy the application code and example .env file
+# Copy the application code and .env file
 COPY main.py .
-COPY .env.example .
-
-# Set environment variables with default values
-ENV OPENAI_API_URL="https://api.openai.com/v1"
-ENV ACCESS_TOKEN=""
+COPY .env .
 
 # Expose the port the app runs on
 EXPOSE 7860
