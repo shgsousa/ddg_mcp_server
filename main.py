@@ -215,8 +215,8 @@ def summarize_text(text: str, max_tokens: int = MAX_SUMMARY_TOKENS) -> str:
         response = openai_client.chat.completions.create(
             model=DEFAULT_MODEL,
             messages=[
-                {"role": "system", "content": "You are a helpful assistant that summarizes web content concisely."},
-                {"role": "user", "content": f"Summarize the following text in a concise, informative way. Focus on the main points and key information:\n\n{text}"}
+                {"role": "system", "content": "You are a helpful assistant that creates comprehensive summaries of web content. Preserve all key information, facts, and important details while making the text more concise."},
+                {"role": "user", "content": f"Summarize the following text thoroughly. Focus on maintaining all important information, key points, factual data, and critical context while making it more concise:\n\n{text}"}
             ],
             max_tokens=max_tokens,
             timeout=API_TIMEOUT
