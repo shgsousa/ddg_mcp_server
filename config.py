@@ -7,7 +7,7 @@ DEFAULT_MODEL = "openai/gpt-4.1-nano"
 MAX_SUMMARY_TOKENS = 1000
 
 # Maximum characters to send to the API for summarization
-MAX_INPUT_CHARS = 15000
+MAX_INPUT_CHARS = 64*1024  # 64 kbytes
 
 # Timeout for API calls in seconds
 API_TIMEOUT = 30
